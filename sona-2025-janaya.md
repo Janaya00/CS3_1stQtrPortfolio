@@ -25,3 +25,5 @@ The Filipinos can’t always hide behind the positive demeanor and the facade of
 ## **1 word/ phrase/ or sentence do you have for the Philippines after hearing SONA 2025**
 
 God Bless the Philippines.
+
+<link>https://www.youtube.com/watch?v=ikJ26S2kGLc
