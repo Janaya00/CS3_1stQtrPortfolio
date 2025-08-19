@@ -4,11 +4,12 @@
 
     <h2> Q1 2nd Graded Exercise submitted by Janaya Pagdilao of 9 Rubidium</h2>
 
-    <p style="font-size: 22px;" ">Meal price: <input type="number" id= "mp"> </p>
-    <p style="font-size: 22px;" ">Tip: <input type="number" id="tip"> </p>
-    <p style="font-size: 22px;" ">Service Charge: <input type="number" id="serviceCharge"> </p>
+    <p style="font-size: 22px;" >Meal price: <input type="number" value= "mp"> </p> 
+    <p style="font-size: 22px;" >Tip: <input type="number" value="tip"> </p> 
+    <p style="font-size: 22px;" >Service Charge: <input type="number" value="serviceCharge"> </p> 
 
-    <button> Accept input</button>
+    <input type="button" value="Accept Input" onclick="totalMeal()">
+</br> </br> Total Meal: <span id="totalCost"></span>
 
     <script>
         function totalMeal() {
