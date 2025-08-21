@@ -7,7 +7,7 @@
         <br>
         The number is from 1 to 100
         
-        <p style="font-size: 22px;">Enter your guess: <input type="number"> </p>
+        <p style="font-size: 22px;">Enter your guess: <input type="number" id="userGuess"> </p>
   
         <button onclick="checkIt()">Accept input</button>
         <p id="result" style="font-size: 22px;"></p>        
@@ -31,12 +31,12 @@
                 document.getElementById("result").textContent = " You are correct! The number is " + dNumber + ". ";
             }
 
-                if (userGuess < dNumber)
+                else if (userGuess < dNumber)
             {
                 document.getElementById("result").textContent = "Higher";
             }
 
-                    if (userGuess > dNumber)
+               else (userGuess > dNumber)
             {
                 document.getElementById("result").textContent = "Lower";
             }
