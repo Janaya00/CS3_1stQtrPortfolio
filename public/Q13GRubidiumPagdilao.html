@@ -22,7 +22,7 @@
 
                 if (userGuess < 1 || userGuess > 100)
             {
-                document.getElementbId("result").textContent = "Please enter a number from 1 and 100.";
+                document.getElementById("result").textContent = "Please enter a number from 1 and 100.";
                 return;
             }
 
@@ -31,8 +31,7 @@
                 document.getElementById("result").textContent = " You are correct! The number is " + dNumber + ". ";
             } else if (userGuess > dNumber){
                 document.getElementById("result").textContent = "Lower";
-            } else (userGuess < dNumber)
-            {
+            } else{
                 document.getElementById("result").textContent = "Higher";
             }
 
