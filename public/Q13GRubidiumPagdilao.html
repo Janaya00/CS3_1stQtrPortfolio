@@ -31,12 +31,12 @@
                 document.getElementById("result").textContent = " You are correct! The number is " + dNumber + ". ";
             }
 
-                else if (userGuess < dNumber)
+                else if (userGuess > dNumber)
             {
                 document.getElementById("result").textContent = "Higher";
             }
 
-               else (userGuess > dNumber)
+               else (userGuess < dNumber)
             {
                 document.getElementById("result").textContent = "Lower";
             }
