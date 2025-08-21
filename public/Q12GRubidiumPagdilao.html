@@ -1,28 +1,25 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
-<body>
+    <body>
+        <h2> Q1 2nd Graded Exercise submitted by Janaya Pagdilao of 9 Rubidium</h2>
+        <p style="font-size: 22px;">Meal price: <input type="number" id="mp" value="119.99"> </p>
+        <p style="font-size: 22px;">Tip: <input type="number" id="tip" value="20"> </p>
+        <p style="font-size: 22px;">Service Charge: <input type="number" id="sc" value="12"> </p>   
 
-    <h2> Q1 2nd Graded Exercise submitted by Janaya Pagdilao of 9 Rubidium</h2>
+        <button onclick="totalMeal()">Accept input</button>
+        <p id="result" style="font-size: 22px;"></p>        
+        <script>
+            function totalMeal() {
+                let mp = parseFloat(document.getElementById("mp").value);
+                let tip = parseFloat(document.getElementById("tip").value);
+                let sc = parseFloat(document.getElementById("sc").value);
 
-    <p style="font-size: 22px;">Meal price: <input type="number" id="mp" value="119.99"> </p>
-    <p style="font-size: 22px;">Tip: <input type="number" id="tip" value="20"> </p>
-    <p style="font-size: 22px;">Service Charge: <input type="number" id="sc" value="12"> </p>
+                let totalCost = mp + tip + (sc / 100 * mp);
+                let roundedTotalCost = totalCost.toFixed(2);
 
-    <button onclick="totalMeal()">Accept input</button>
-    <p id="result" style="font-size: 22px;"></p>
-
-    <script>
-        function totalMeal() {
-            let mp = parseFloat(document.getElementById("mp").value);
-            let tip = parseFloat(document.getElementById("tip").value);
-            let sc = parseFloat(document.getElementById("sc").value);
-
-            let totalCost = mp + tip + (sc / 100 * mp);
-            let roundedTotalCost = totalCost.toFixed(2);
-
-            document.getElementById("result").textContent = "Total Meal Cost: " + roundedTotalCost;
-        }
-    </script>
-
+                document.getElementById("result").textContent = "Total Meal Cost: " + roundedTotalCost;
+            }   
+        </script>
+        
 </body>
 </html>
