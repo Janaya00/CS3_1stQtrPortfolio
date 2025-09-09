@@ -12,5 +12,29 @@
         document.write(tinola[i]);
       }
   </script>
-  
+
+    <head>
+          <meta charset="UTF-8">
+          <title>Pimp My Button</title>
+          <style>
+            button {
+              padding: 10px 20px;
+              font-size: 1rem;
+              cursor: pointer;
+            }
+            
+            </style>
+      </head>
+
+      <body>
+          <div id="container"></div>
+          <button>Click me!</button>
+
+          <script>
+            for(let i = 0; i < 10; i++){
+              document.getElementById('body')[0].innerHTML += '<button>Click me!</button>';
+            }
+            </script>
+          </body>
+
 </html>
