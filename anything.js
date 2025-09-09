@@ -8,3 +8,10 @@ while(i <= 3){
     i++;
 }
 
+i = 1;
+do {
+    console.log(i);
+    i++;
+} while(i <= 3);
+
+//* guaranteed to run atleast once because it only reads the condition afterwards *//
