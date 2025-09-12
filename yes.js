@@ -24,3 +24,5 @@ setTimeout(greet('rb'), 4000);
 greetrb = name => console.log('greetings dear ' + name);
 greetrb('rb')
 //* arrow function
+
+//* do the triangle 5 rows 1,2,3,4,5 stars write on paper
