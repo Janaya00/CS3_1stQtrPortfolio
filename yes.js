@@ -1,5 +1,4 @@
-int square = function(int a){
-    let int a;
-    return a * a;
-  }
-  
+const square = function(a) {
+  return a * a;
+};
+
