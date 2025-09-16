@@ -1,0 +1,71 @@
+<body style="background-image: url('https://i.pinimg.com/1200x/56/84/a8/5684a83ac4a3b2bd9a25572aa0d17fbe.jpg'); background-size: cover;"></body>
+<div style="text-align: center; font-family: 'Times New Roman', Times, serif; font-size: 16px; font font-weight: bold; color: #543e3a">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+  <h1>word guessing game . . .</h1>
+  <p>
+    <span><p style="font-size: large" id="attempts"></p></span>
+</p>
+<p style="font-size: xx-large" id="wordDisplay"></p>
+<input type="text" id="guessInput"; class="circular-button"; style="text-transform: lowercase; font-size: large; size: length: 100px; height: 50px; color: #543e3a;" placeholder="   a-z  " size="5" > <button class="animated-button" style="color: #ede1df; width: 100px; height: 50px; font-size: large;color: #543e3a"  onclick="makeGuess()" >Guess</button>
+<br>
+<br>
+
+ <button id="playAgainBtn" onclick="playAgain()" style="display:inline-block ">Play Again</button>
+<p id="message"></p>
+
+
+
+<script>
+  let secretWord = ["j", "o", "y", "f", "u", "l","j", "a", "n","a","y","a"];
+  let guessedWord = ["_", "_", "_", "_","_", "_","_","_","_","_","_","_"];
+  let attemptsLeft = 6;
+
+  document.getElementById("attempts").textContent = "Attempts left: " + attemptsLeft;
+  document.getElementById("wordDisplay").textContent = guessedWord.join(" ");
+
+  function makeGuess() {
+    let guess = document.getElementById("guessInput").value.toLowerCase();
+    let correct = false;
+    if (attemptsLeft <= 0) {
+    document.getElementById("playAgainBtn").style.display = "inline-block"; 
+}
+
+
+    for (let i = 0; i < secretWord.length; i++) {
+      if (secretWord[i] === guess) {
+        guessedWord[i] = guess;
+        correct = true;
+      }
+   }
+    if (!correct) {
+      attemptsLeft--; // Decrease attempts if the guess is wrong
+      document.getElementById("attempts").textContent = "Attempts left: " + attemptsLeft;
+    }
+
+    document.getElementById("wordDisplay").textContent = guessedWord.join(" ");
+    document.getElementById("message").textContent = correct ? "🌟 Correct!" : "🎶 Try again.";
+    document.getElementById("message").style.color = correct ? "#7fad97": "#a15252"; 
+    document.getElementById("guessInput").value = "";
+
+    if (attemptsLeft <= 0) {
+      document.getElementById("message").textContent = "🤍 Game Over! The word was: " + secretWord.join("");
+      document.getElementById("guessInput").disabled = true;
+    }
+  }
+
+  function playAgain() {
+    guessedWord = ["_", "_", "_", "_","_", "_","_","_","_","_","_","_"];
+    attemptsLeft = 6;
+    document.getElementById("attempts").textContent = "Attempts left: " + attemptsLeft;
+    document.getElementById("wordDisplay").textContent = guessedWord.join(" ");
+    document.getElementById("message").textContent = "";
+    document.getElementById("guessInput").value = "";
+    document.getElementById("guessInput").disabled = false;
+    document.getElementById("playAgainBtn").style;
+  }
+</script>
