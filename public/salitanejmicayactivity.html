@@ -1,8 +1,13 @@
 
 <!doctype html>
 <html>
-  <body style="background-color:#fceced">
+  <body style="background-color:#f8e2e9">
     <style>
+        body {
+        background: url("https://i.pinimg.com/originals/4f/0a/4c/4f0a4cd7babfc4df18cb8d5b437e2d10.gif");
+        background-size: cover;
+
+        }
 
         table {
             font-family: arial, sans-serif;
@@ -11,25 +16,30 @@
             align-content: center;
             content: center;
             color: #c3547d;
+            animation: fadeIn 3s;
         }
 
         td, th {
             border: 1px solid #c3547d;
             text-align: center;
             padding: 8px;
+            animation: fadeIn 3s;
          
         }
 
         tr:nth-child(even) {
-            background-color: #ffe7e7;
+            background-color: #fafafa;
+            animation: fadeIn 3s;
         }
 
         tr:nth-child(odd) {
             background-color: #faefef;
+            animation: fadeIn 3s;
         }
 
          tr:nth-child(1) {
             background-color: #fcc0cf;
+            animation: fadeIn 3s;
         }
 
         h1 {
@@ -37,13 +47,36 @@
             color: #d16a8e;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-style: italic;
+            animation: fadeIn 3s;
         }
 
         h3{
           text-align: center;
             color: #d16a8e;
           line-height: 0cm;
+          animation: fadeIn 3s;
         }
+
+        @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+        }
+
+        h2{
+           text-align: center;
+            color: #d16a8e;
+            font-size: 50px;
+
+          line-height: 0cm;
+          animation: fadeIn 3s;
+        }
+
+        
+
+
+
+}
+
     </style>
 
     <h1> Janaya's Tuesday Schedule! </h1>
@@ -55,13 +88,13 @@
 
     <br>
     <tr>
-        <th> Time </th>
-        <th> Subject </th>
+        <th>  𝜗𝜚 Time ⏱ </th>
+        <th>  𝜗𝜚 Subject 📓 </th>
     </tr>
 
     <tr>
        <tr>
-         <td> 7:30 - 8:15 </td>
+         <td>  7:30 - 8:15 </td>
          <td> English </td>
         </tr>
 
@@ -77,12 +110,11 @@
 
        <tr>
         <td> 9:10 - 9:55 </td>
-        <td> Physics </td>
+        <td rowspan="2">Physics</td>
        </tr>
 
        <tr>
         <td> 9:55 - 10:40 </td>
-        <td> Physics </td>
        </tr>
 
         <tr>
@@ -97,13 +129,12 @@
        
        <tr>
        <td> 12:10 - 12:20 </td>
-       <td>  Lunch </td>
+       <td  rowspan="2"> Lunch </td>
        </tr>
        
           
        <tr>
        <td> 12:20 - 1:05 </td>
-       <td>  Lunch </td>
        </tr>
 
        <tr>
@@ -119,20 +150,30 @@
        
        <tr>
           <td> 2:45 - 3:30 </td>
-          <td> Computer Science </td>
+          <td rowspan="2">Computer Science </td>
        </tr>
 
        
         <tr>
             <td> 3:30 - 4:15 </td>
-            <td> Computer Science </td>
         </tr>
     </tr>
   </table>
-   <img  style="margin-left: auto; margin-right: auto; height: 150px; width: 110px;" src="https://mail.google.com/mail/u/1?ui=2&ik=80a4201c9b&attid=0.1&permmsgid=msg-a:r4474795265870285208&th=199bd9a1bb76deac&view=fimg&fur=ip&permmsgid=msg-a:r4474795265870285208&sz=s0-l75-ft&attbid=ANGjdJ_vnTqo0fHyvvtdO2r8QJVnsYKngC6y8vj_6F0MQmdNO_qgjk2XdD7GaDx5roPS15zGFhpKIHdE1JBPpS8DeEAnXxZRcEbviPsAHIgKYmN7DffJHVcahd7rtPQ&disp=emb&realattid=ii_199bd9a26ecad8c1ff71&zw"></img> 
-   
-    <iframe  style="margin-left: auto; margin-right: auto;" src="https://youtu.be/ZncbtRo7RXs?si=rC3b6vnbUGVoykXD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    <br>
-  </body>
+  <br>
+  <h2>    ────𝜗𝜚──── </h2>
+
+
+<div style="display:flex; justify-content:center; align-items:center; gap:25px; margin-top:20px;">
+  <img class="fade-in"src="https://mail.google.com/mail/u/1?ui=2&ik=80a4201c9b&attid=0.1&permmsgid=msg-a:r4474795265870285208&th=199bd9a1bb76deac&view=fimg&fur=ip&permmsgid=msg-a:r4474795265870285208&sz=s0-l75-ft&attbid=ANGjdJ_vnTqo0fHyvvtdO2r8QJVnsYKngC6y8vj_6F0MQmdNO_qgjk2XdD7GaDx5roPS15zGFhpKIHdE1JBPpS8DeEAnXxZRcEbviPsAHIgKYmN7DffJHVcahd7rtPQ&disp=emb&realattid=ii_199bd9a26ecad8c1ff71&zw" style="width:140px; height;200px; border-radius:10px; box-shadow:2px 2px 10px #fa87af;">
+  <iframe clas="fade-in" width="400" height="200"
+    src="https://www.youtube.com/embed/ZncbtRo7RXs"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+
+
 </html>
 
