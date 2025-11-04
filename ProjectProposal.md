@@ -42,4 +42,3 @@
 #### CHALLENGE MODE:
 ![challenge](challengemode.jpeg)
 
-`
