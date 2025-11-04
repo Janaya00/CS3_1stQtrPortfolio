@@ -34,12 +34,11 @@
 ### HOW WOULD THE WEBSITE LOOK LIKE?
 
 #### HOMEPAGE:
-![homepage] (C:/Users/janayapagdilao/Desktop/images/homepage.jpeg)
+![homepage](homepage.jpeg)
 
 
 #### FREEPLAY MODE:
-![freeplay](C:/Users/janayapagdilao/Desktop/images/freeplaymode.jpeg)
+![freeplay](freeplaymode.jpeg)
 
 #### CHALLENGE MODE:
-![challenge](C:/Users/janayapagdilao/Desktop/images/challengemode.jpeg)
-
+![challenge](challengemode.jpeg)
