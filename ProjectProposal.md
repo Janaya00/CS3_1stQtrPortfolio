@@ -34,11 +34,11 @@
 ### HOW WOULD THE WEBSITE LOOK LIKE?
 
 #### HOMEPAGE:
-![homepage](homepage.jpeg)
+![homepage](./images/homepage.jpeg)
 
 #### FREEPLAY MODE:
-![freeplay](freeplaymode.jpeg)
+![freeplay](./images/freeplaymode.jpeg)
 
 #### CHALLENGE MODE:
-![challenge](challengemode.jpeg)
+![challenge](./images/challengemode.jpeg)
 
