@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cake Decorator — Freeplay & Challenges 🍰</title>
+<style>
+  :root{
+    --bg:#fff7f2; --card:#fff; --muted:#7a5a4a; --accent:#ff6b81;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter, system-ui, Arial;
+    background:linear-gradient(180deg,#fff7f2 0%, #ffeef0 60%);
+    color:var(--muted);
+    display:flex; gap:20px; padding:28px; align-items:flex-start; min-height:100vh;
+  }
+
+  /* Left column: game area */
+  .game {
+    width:720px; background:var(--card); border-radius:16px; padding:18px;
+    box-shadow:0 8px 30px rgba(120,90,80,0.12);
+  }
+  header{display:flex; justify-content:space-between; align-items:center; gap:12px}
+  header h1{margin:0; font-size:20px; color:#4a2e2a}
+  .controls{display:flex; gap:8px; align-items:center}
+  button{
+    background:linear-gradient(180deg,#fff,#ffeeef);
+    border:1px solid #f0c9d0; padding:8px 12px; border-radius:10px;
+    cursor:pointer; font-weight:600; color:var(--muted);
+  }
+  button.secondary{background:#fff; border:1px solid #e6dcdc; box-shadow:none}
+  .hint{font-size:13px; color:#a07b77}
+
+  /* cake stage */
+  .stage {
+    margin-top:14px; padding:18px; border-radius:12px; background:linear-gradient(180deg,#fff,#fff6f7);
+    display:flex; justify-content:center; align-items:center; height:460px; position:relative; overflow:hidden;
+  }
+  /* the cake itself */
+  .cake {
+    width:420px; height:300px; position:relative; --tier-gap:12px;
+  }
+  .tier{
+    position:absolute; left:50%; transform:translateX(-50%);
+    background:linear-gradient(180deg,#fffaf2,#fff1e6);
+    border-radius:24px; box-shadow:0 8px 18px rgba(0,0,0,0.12) inset;
+    display:flex; justify-content:center; align-items:center;
+    transition:transform 300ms ease;
+  }
+  .tier.base{width:360px; height:140px; bottom:14px}
+  .tier.mid{width:300px; height:110px; bottom:120px}
+  .tier.top{width:220px; height:80px; bottom:220px}
+  /* frosting decorative wave */
+  .frosting{
+    position:absolute; left:0; right:0; top:0; height:30%; pointer-events:none;
+    background:radial-gradient(closest-side,#fff0,#fff3 20%);
+    opacity:0.6; border-top-left-radius:24px; border-top-right-radius:24px;
+    mix-blend-mode:screen;
+    animation:softWiggle 5s ease-in-out infinite;
+  }
+  @keyframes softWiggle{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(3px)}
+    100%{transform:translateY(0)}
+  }
+
+  /* decoration items added onto cake */
+  .decor{
+    position:absolute; transform-origin:center center; cursor:grab;
+    transition:transform 150ms ease, filter 200ms;
+    user-select:none;
+    touch-action:none;
+  }
+  .decor:active{cursor:grabbing}
+  .decor.drop-in{animation:dropIn 360ms cubic-bezier(.2,.9,.3,1)}
+  @keyframes dropIn{0%{transform:translateY(-40px) scale(.6) rotate(-10deg); opacity:0}100%{transform:none; opacity:1}}
+
+  /* sparkle effect for some decorations */
+  .sparkle::after{
+    content:""; position:absolute; inset: -6px; background:radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 40%); opacity:.9;
+    animation:glint 1.8s infinite;
+    pointer-events:none;
+  }
+  @keyframes glint{0%{transform:scale(.9) rotate(0)}50%{transform:scale(1.05) rotate(8deg)}100%{transform:scale(.9) rotate(0)}}
+
+  /* Right column: palette & info */
+  .side {
+    width:360px; padding:18px; background:linear-gradient(180deg,#fff,#fff6f7); border-radius:16px;
+    box-shadow:0 8px 30px rgba(120,90,80,0.06);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .palette {display:flex; gap:10px; flex-wrap:wrap; padding:8px; border-radius:12px; background:#fffaf9; min-height:110px}
+  .item{
+    width:62px; height:62px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px;
+    border:2px solid #ffe7ea; background:linear-gradient(180deg,#fff,#fff0); cursor:pointer;
+    box-shadow:0 4px 10px rgba(120,80,80,0.06);
+  }
+  .item:hover{transform:translateY(-6px); transition:transform 200ms}
+  .small{width:44px;height:44px;font-size:20px}
+
+  .meta{display:flex; justify-content:space-between; align-items:center}
+  .badge{padding:8px 10px; border-radius:10px; background:#fff; border:1px dashed #f1dada; font-weight:700; color:#7a4b4f}
+
+  /* footer */
+  .footer{font-size:12px; color:#a07b77}
+
+  /* selection box (when selected) */
+  .selected{
+    outline:3px solid rgba(255,107,129,0.22);
+    box-shadow:0 8px 28px rgba(255,107,129,0.08);
+  }
+
+  /* small helper styles */
+  .row{display:flex; gap:8px; align-items:center}
+  .title{font-weight:700; font-size:14px}
+  .center{display:flex; justify-content:center; align-items:center}
+
+  /* download tip */
+  .tip{font-size:13px; color:#9a6b69}
+</style>
+</head>
+<body>
+
+<div class="game">
+  <header>
+    <h1>🍰 Cake Decorator</h1>
+    <div class="controls">
+      <button id="newChallenge">🎲 Random Category</button>
+      <button id="toggleFree" class="secondary">Freeplay: ON</button>
+      <button id="clear">🧼 Clear</button>
+      <button id="download">⬇️ Download</button>
+    </div>
+  </header>
+
+  <div class="hint">Tip: click a palette item to add it to the cake. Drag to move. Double-click to remove.</div>
+
+  <section class="stage" id="stage">
+    <div class="cake" id="cake">
+      <div class="tier base"><div class="frosting"></div></div>
+      <div class="tier mid"><div class="frosting"></div></div>
+      <div class="tier top"><div class="frosting"></div></div>
+    </div>
+  </section>
+
+  <div style="display:flex; justify-content:space-between; margin-top:12px; align-items:center">
+    <div class="meta">
+      <div class="badge" id="categoryBadge">Category: Freeplay</div>
+      <div class="badge" id="scoreBadge" style="display:none">Challenge Mode</div>
+    </div>
+    <div class="footer tip">Built for school projects — customize images & items easily.</div>
+  </div>
+</div>
+
+<div class="side">
+  <div class="row" style="justify-content:space-between">
+    <div><div class="title">Decorations Palette</div><div class="hint">(click to add)</div></div>
+    <div class="title" id="challengeName"></div>
+  </div>
+
+  <div class="palette" id="palette">
+    <!-- palette items will be injected by JS -->
+  </div>
+
+  <div style="display:flex; gap:8px; margin-top:6px; align-items:center; justify-content:space-between">
+    <div class="row">
+      <button id="undo">↩️ Undo</button>
+      <button id="randomizeAdd">✨ Auto Add Some</button>
+    </div>
+    <div class="title">Mode</div>
+  </div>
+
+  <div style="margin-top:10px">
+    <div class="title">How to play</div>
+    <ol style="margin:6px 0 0 18px; color:#8f6e6a">
+      <li>Click a decoration in the palette to add it to the cake.</li>
+      <li>Drag the decoration to move it. Double-click to delete.</li>
+      <li>Use <strong>Random Category</strong> for challenge inspiration.</li>
+      <li>Toggle <strong>Freeplay</strong> to ignore category suggestions.</li>
+    </ol>
+  </div>
+
+</div>
+
+<script>
+/* -------------------------
+   Data: categories & palette
+   ------------------------- */
+const CATEGORIES = {
+  "Birthday": ["🎈","🕯️","🍫","🧁","⭐"],
+  "Wedding":  ["🌸","💍","🌿","🎀","🥂"],
+  "Halloween":["🎃","🕸️","🍬","🦇","🕯️"],
+  "Tropical": ["🍍","🌺","🥭","🌴","🍹"],
+  "Kawaii":   ["🐰","🍡","🌈","🍓","✨"]
+};
+
+let FREEPLAY = true;
+let historyStack = [];
+const paletteEl = document.getElementById('palette');
+const cakeEl = document.getElementById('cake');
+const categoryBadge = document.getElementById('categoryBadge');
+const challengeName = document.getElementById('challengeName');
+const toggleFreeBtn = document.getElementById('toggleFree');
+const scoreBadge = document.getElementById('scoreBadge');
+
+/* start with a default palette (union of all) */
+const defaultItems = [...new Set([].concat(...Object.values(CATEGORIES)))];
+
+function renderPalette(items = defaultItems){
+  paletteEl.innerHTML = '';
+  items.forEach(sym=>{
+    const b = document.createElement('button');
+    b.className = 'item';
+    b.innerText = sym;
+    b.title = 'Add ' + sym;
+    b.onclick = ()=> addDecoration(sym);
+    paletteEl.appendChild(b);
+  });
+}
+
+/* -------------------------
+   Add / place decorations
+   ------------------------- */
+let nextId = 1;
+function addDecoration(symbol, x=null, y=null){
+  const id = 'd' + (nextId++);
+  const el = document.createElement('div');
+  el.className = 'decor drop-in';
+  el.dataset.id = id;
+  el.innerHTML = `<div style="font-size:36px; line-height:1">${symbol}</div>`;
+  // default position: center of top tier
+  const rect = cakeEl.getBoundingClientRect();
+  const cx = rect.width/2 - 20;
+  const cy = rect.height/2 - 20;
+  el.style.left = (x !== null ? x : cx) + 'px';
+  el.style.top  = (y !== null ? y : cy) + 'px';
+
+  // style specific decorations with little sparkle or rotate
+  if(/[✨🌟✨✳️⭐]/.test(symbol)) el.classList.add('sparkle');
+
+  // add simple random tilt to make things playful
+  const angle = (Math.random()*40 - 20).toFixed(1);
+  el.style.transform = `rotate(${angle}deg)`;
+
+  // make the size vary a bit
+  const scale = 0.85 + Math.random()*0.6;
+  el.style.fontSize = (32*scale) + 'px';
+
+  // attach pointer handlers for drag
+  makeDraggable(el);
+
+  cakeEl.appendChild(el);
+  historyStack.push({action:'add', id, el});
+}
+
+/* -------------------------
+   Dragging (pointer events)
+   ------------------------- */
+function makeDraggable(el){
+  let down = false, ox=0, oy=0, startX=0, startY=0;
+  el.addEventListener('pointerdown', e=>{
+    down = true; el.setPointerCapture(e.pointerId);
+    el.classList.add('selected');
+    ox = parseFloat(el.style.left || 0);
+    oy = parseFloat(el.style.top || 0);
+    startX = e.clientX; startY = e.clientY;
+    e.preventDefault();
+  });
+  window.addEventListener('pointermove', e=>{
+    if(!down) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    el.style.left = (ox + dx) + 'px';
+    el.style.top  = (oy + dy) + 'px';
+  });
+  window.addEventListener('pointerup', e=>{
+    if(!down) return;
+    down = false;
+    try{ el.releasePointerCapture(e.pointerId); }catch(e){}
+    el.classList.remove('selected');
+    // record move in history
+    historyStack.push({action:'move', id:el.dataset.id, left:el.style.left, top:el.style.top});
+  });
+
+  // double-click to delete
+  el.addEventListener('dblclick', ()=>{
+    const container = el.parentElement;
+    historyStack.push({action:'del', id:el.dataset.id, el});
+    container.removeChild(el);
+  });
+
+  // small tap to bring to front (z-order)
+  el.addEventListener('click', ()=>{
+    // bring to front
+    cakeEl.appendChild(el);
+  });
+}
+
+/* -------------------------
+   Random Category / Challenge
+   ------------------------- */
+function newCategory(){
+  const keys = Object.keys(CATEGORIES);
+  const pick = keys[Math.floor(Math.random()*keys.length)];
+  setCategory(pick);
+  if(!FREEPLAY){
+    // populate palette with category items
+    renderPalette(CATEGORIES[pick]);
+    // show challenge hint
+    challengeName.textContent = pick + ' Challenge';
+    scoreBadge.style.display = 'inline-block';
+  } else {
+    renderPalette(defaultItems);
+    challengeName.textContent = '';
+    scoreBadge.style.display = 'none';
+  }
+}
+
+function setCategory(name){
+  categoryBadge.textContent = 'Category: ' + name;
+}
+
+/* -------------------------
+   Freeplay toggle
+   ------------------------- */
+document.getElementById('toggleFree').addEventListener('click', ()=>{
+  FREEPLAY = !FREEPLAY;
+  toggleFreeBtn.textContent = 'Freeplay: ' + (FREEPLAY? 'ON':'OFF');
+  if(FREEPLAY){
+    renderPalette(defaultItems);
+    setCategory('Freeplay');
+    challengeName.textContent = '';
+    scoreBadge.style.display = 'none';
+  } else {
+    newCategory(); // pick one and set palette
+  }
+});
+
+/* -------------------------
+   Clear / Undo / Auto add
+   ------------------------- */
+document.getElementById('clear').addEventListener('click', ()=>{
+  [...cakeEl.querySelectorAll('.decor')].forEach(n=>n.remove());
+  historyStack.push({action:'clear'});
+});
+document.getElementById('undo').addEventListener('click', ()=>{
+  if(historyStack.length === 0) return;
+  const last = historyStack.pop();
+  if(last.action === 'add'){
+    const el = cakeEl.querySelector(`[data-id="${last.id}"]`);
+    if(el) el.remove();
+  } else if(last.action === 'del'){
+    cakeEl.appendChild(last.el);
+  } else if(last.action === 'move'){
+    const el = cakeEl.querySelector(`[data-id="${last.id}"]`);
+    if(el){ el.style.left = last.left; el.style.top = last.top; }
+  } else if(last.action === 'clear'){
+    // can't undo clear reliably here
+    alert('Undo for Clear not supported — try using Undo soon after actions.');
+  }
+});
+document.getElementById('randomizeAdd').addEventListener('click', ()=>{
+  // add 3-6 random decorations from current palette
+  const items = FREEPLAY ? defaultItems : (CATEGORIES[categoryBadge.textContent.replace('Category: ','')] || defaultItems);
+  const count = 3 + Math.floor(Math.random()*4);
+  const rect = cakeEl.getBoundingClientRect();
+  for(let i=0;i<count;i++){
+    const sym = items[Math.floor(Math.random()*items.length)];
+    const x = Math.random() * (rect.width - 80);
+    const y = Math.random() * (rect.height - 80);
+    addDecoration(sym, x, y);
+  }
+});
+
+/* -------------------------
+   Download canvas as PNG
+   ------------------------- */
+document.getElementById('download').addEventListener('click', async ()=>{
+  // draw cakeEl to an image via SVG foreignObject -> canvas
+  const rect = cakeEl.getBoundingClientRect();
+  const clone = cakeEl.cloneNode(true);
+  clone.style.transform = ''; clone.style.left=0; clone.style.top=0;
+  // scale to device pixel ratio for sharpness
+  const scale = window.devicePixelRatio || 1;
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${rect.width*scale}' height='${rect.height*scale}'>
+  <foreignObject width='100%' height='100%'>
+    <div xmlns='http://www.w3.org/1999/xhtml' style='width:${rect.width}px;height:${rect.height}px'>
+      ${new XMLSerializer().serializeToString(clone)}
+    </div>
+  </foreignObject>
+</svg>`;
+  const img = new Image();
+  const svgBlob = new Blob([svg], {type:'image/svg+xml;charset=utf-8'});
+  const url = URL.createObjectURL(svgBlob);
+  img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    canvas.width = rect.width*scale; canvas.height = rect.height*scale;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    URL.revokeObjectURL(url);
+    canvas.toBlob(blob=>{
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'my-cake.png';
+      a.click();
+    });
+  };
+  img.src = url;
+});
+
+/* -------------------------
+   Start & initial rendering
+   ------------------------- */
+renderPalette();
+setCategory('Freeplay');
+
+/* UI buttons */
+document.getElementById('newChallenge').addEventListener('click', () => {
+  // choose random category and populate palette (if freeplay off)
+  const keys = Object.keys(CATEGORIES);
+  const pick = keys[Math.floor(Math.random()*keys.length)];
+  if(!FREEPLAY){
+    renderPalette(CATEGORIES[pick]);
+    setCategory(pick);
+    challengeName.textContent = pick + ' Challenge';
+    scoreBadge.style.display = 'inline-block';
+  } else {
+    // in freeplay, just show the selected category as a suggestion but keep palette full
+    setCategory(pick + ' (suggestion)');
+    challengeName.textContent = pick + ' (suggestion)';
+    renderPalette(defaultItems);
+  }
+});
+
+/* small helper: double tap on empty stage clears selection (mobile) */
+let lastTap = 0;
+document.getElementById('stage').addEventListener('pointerdown', (e)=>{
+  const now = Date.now();
+  if(now - lastTap < 300){
+    // double tap: deselect all
+    [...cakeEl.querySelectorAll('.decor')].forEach(d=>d.classList.remove('selected'));
+  }
+  lastTap = now;
+});
+
+/* allow adding by keyboard: press 1..5 to add palette items quickly */
+window.addEventListener('keydown', (ev)=>{
+  if(ev.key >= '1' && ev.key <= '9'){
+    const idx = parseInt(ev.key) - 1;
+    const items = [...paletteEl.querySelectorAll('.item')];
+    if(items[idx]) items[idx].click();
+  }
+});
+
+</script>
+</body>
+</html>

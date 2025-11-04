@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🍰 Cake Decorating Game</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #ffe4f2, #ffd1e8);
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+      color: #b34774;
+    }
+
+    h1 {
+      animation: fadeIn 2s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .cake {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 50px auto;
+    }
+
+    .cake img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 10px #ffaac9;
+      transition: transform 0.3s;
+    }
+
+    .cake img:hover {
+      transform: scale(1.05);
+    }
+
+    .decoration {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+    }
+
+    button {
+      background: #ffb6c1;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 3px #b34774;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background: #ff99b6;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍰 Decorate Your Cake!</h1>
+
+  <div class="cake">
+    <img id="cakeBase" src="https://i.pinimg.com/originals/2b/89/10/2b8910cf4741e7efbc34fa7299cdb56f.png">
+    <img class="decoration" id="topping" src="">
+  </div>
+
+  <button onclick="addDecoration('strawberry')">Add Strawberries 🍓</button>
+  <button onclick="addDecoration('sprinkles')">Add Sprinkles ✨</button>
+  <button onclick="addDecoration('candle')">Add Candle 🕯️</button>
+  <button onclick="randomTheme()">🎲 Random Theme</button>
+  <button onclick="clearCake()">Clear 🍰</button>
+
+  <script>
+    function addDecoration(type) {
+      const topping = document.getElementById("topping");
+      if (type === "strawberry") topping.src = "https://i.pinimg.com/originals/52/6d/2e/526d2e1f84e6dfca4e1e1ef3cfb040f0.png";
+      if (type === "sprinkles") topping.src = "https://i.pinimg.com/originals/0b/f4/d1/0bf4d1ad8cbdd66ad7e4c4dfb69c2a39.png";
+      if (type === "candle") topping.src = "https://i.pinimg.com/originals/41/4b/0a/414b0a4ab58a773b9e67a9a4cf04e943.png";
+    }
+
+    function randomTheme() {
+      const options = ["strawberry", "sprinkles", "candle"];
+      const random = options[Math.floor(Math.random() * options.length)];
+      addDecoration(random);
+    }
+
+    function clearCake() {
+      document.getElementById("topping").src = "";
+    }
+  </script>
+</body>
+</html>
