@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>MiCayke Decorating!</title>
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="icon" type="image/x-icon" href="favicon.jpeg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -76,6 +76,9 @@ body {
     z-index: 1000;
 }
 
+.bubbles{
+          z-index= 100;
+}
 .tier {
     position: absolute;
     left: 50%;
@@ -176,17 +179,18 @@ img.draggable:active {
 <body>
 
 
+
 <div id="palette"></div>
+
+
 
 <div id="stage-container">
     <header id="cake-header">
     <div class="header-row">
         <h1>🍰 Cake Decorator</h1>
         <div class="controls">
-            <button id="newChallenge">🎲 Random Category</button>
-            <button id="toggleFree" class="secondary">Freeplay: ON</button>
+            <button id="randomizeAdd">🎨 Random Decor</button>
             <button id="clear">🧼 Clear</button>
-            <button id="download">⬇️ Download</button>
         </div>
     </div>
     <div class="hint">
@@ -216,15 +220,15 @@ const CATEGORIES = {
        'Blueberry_Transparent_Clip_Art_Image.png',
        'white choco.png','choco icing.png',
        'strawberry icing.png','blue icing.png',
-       'candle.png'
+       'candle.png','sprinkles.png','rainbow sprinkles.png','image (0).png','image (1).png',
+       'image (2).png','image (3).png','image (4).png',
+       'image (5).png','image (6).png','image (7).png',
+       'image (8).png','image (9).png'
     ]
 };
 
 const stage = document.getElementById('stage');
 const paletteEl = document.getElementById('palette');
-
-
-
 const categoryArrays = Object.values(CATEGORIES);
 
 
@@ -241,6 +245,28 @@ for (let i = 0; i < allItems.length; i++) {
     }
 }
 
+document.getElementById('randomizeAdd').addEventListener('click', () => {
+    const count = 3 + Math.floor(Math.random() * 4); 
+    const rect = stage.getBoundingClientRect();
+
+    for (let i = 0; i < count; i++) {
+        const src = defaultItems[Math.floor(Math.random() * defaultItems.length)];
+        addDecoration(src);
+
+        const img = stage.querySelector('.draggable:last-child');
+
+        const maxX = rect.width - img.offsetWidth;
+        const maxY = rect.height - img.offsetHeight;
+
+        img.style.left = Math.random() * maxX + 'px';
+        img.style.top  = Math.random() * maxY + 'px';
+    }
+});
+
+document.getElementById('clear').addEventListener('click', () => {
+    const decorations = stage.querySelectorAll('.draggable');
+    decorations.forEach(img => img.remove());
+});
 
 function renderPalette(items = defaultItems) {
     paletteEl.innerHTML = '';
@@ -248,6 +274,7 @@ function renderPalette(items = defaultItems) {
         const img = document.createElement('img');
         img.src = src;
         img.title = 'Click to add';
+        img.className = 'item';
         img.onclick = () => addDecoration(src);
         paletteEl.appendChild(img);
     });
@@ -305,6 +332,8 @@ function makeDraggable(img) {
     });
 }
 
+
+
 document.addEventListener('mousemove', e => {
     if (!activeImg) return;
     const rect = stage.getBoundingClientRect();
@@ -343,6 +372,7 @@ document.addEventListener('touchmove', e => {
 
 document.addEventListener('mouseup', () => activeImg = null);
 document.addEventListener('touchend', () => activeImg = null);
+
 
 renderPalette();
 </script>
