@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<img id="pic" src="https://i.pinimg.com/736x/b9/66/4c/b9664ca710fcf45471b5f21d2747c128.jpg" width="200" />
+
+<script>
+function makeDraggable(element) {
+  let isDragging = false;
+  let startX = 0, startY = 0, initialX = 0, initialY = 0;
+
+  element.style.position = "absolute";
+  element.style.cursor = "grab";
+
+  element.addEventListener('mousedown', function(e) {
+    e.preventDefault(); 
+    isDragging = true;
+    element.style.cursor = "grabbing";
+
+    startX = e.clientX;
+    startY = e.clientY;
+    initialX = element.offsetLeft;
+    initialY = element.offsetTop;
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
+  function onMouseMove(e) {
+    if (!isDragging) return;
+    element.style.left = initialX + (e.clientX - startX) + "px";
+    element.style.top  = initialY + (e.clientY - startY) + "px";
+  }
+
+  function onMouseUp() {
+    isDragging = false;
+    element.style.cursor = "grab";
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  }
+}
+
+const picture = document.getElementById("pic");
+makeDraggable(picture);
+</script>
+
+
+
