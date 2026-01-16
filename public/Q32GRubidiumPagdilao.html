@@ -2,19 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
 <meta name="author" content="Janaya Pagdilao">
 <title>Club Application Form!</title>
 
+
 <style>
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(196, 128, 142);  
     background: #f2f6ff;
     padding: 20px;
+    background-image: url("https://i.pinimg.com/originals/39/12/ad/3912ade472c79ff580f08aee1f299578.gif");
+    background-size: cover;     
+    background-repeat: no-repeat; 
+    background-position: center;  
   }
 
-  h1, h2 {
+  h1 {
+    color: rgb(216, 135, 152); 
     text-align: center;
+    margin-bottom: -10px;
+  }
+
+   h2 {
+    margin-top: -10px;
+    color: rgb(216, 135, 152); 
+    text-align: center;
+  }
+
+  legend{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 1.2em; 
+    color: rgb(216, 135, 152); 
   }
 
   form {
@@ -23,16 +46,22 @@
     background: white;
     padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(213, 54, 123, 0.25);
   }
 
   fieldset {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    border: 2px dashed rgb(255, 201, 212);
     border-radius: 5px;
   }
 
   label {
     display: block;
     margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600; 
+    font-size: 1rem; 
+    color: rgb(217, 140, 161);  
   }
 
   input, select, textarea {
@@ -46,7 +75,8 @@
 
 
   input:focus, select:focus, textarea:focus {
-    border: 2px solid #4a7cff;
+    border: 2px solid #ff659d;
+    box-shadow:0 4px 10px rgba(120,80,80,0.25);
     outline: none;
     background-color: #eef3ff;
   }
@@ -62,15 +92,45 @@
     border: 2px solid green;
   }
 
-  .radio-group {
-    margin-top: 10px;
-  }
+.radio-group {
+  margin-top: 8px;
+}
 
-  input[type="submit"], input[type="reset"] {
-    width: 48%;
-    margin-top: 15px;
-    cursor: pointer;
-  }
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+ input[type="submit"], input[type="reset"] {
+  width: 48%;
+  margin-top: 15px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border: none; /* Remove default border */
+  border-radius: 8px; /* Rounded corners */
+  background: linear-gradient(135deg, #ffe7f1, #d99db5); /* Gradient background */
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Subtle shadow */
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover {
+  transform: translateY(-2px); /* Button lifts on hover */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #ffc1da, #ff4a8a);
+}
+
+  input[type="radio"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+
 </style>
 </head>
 
@@ -116,13 +176,21 @@
     </select>
   </label>
 
-  <label>Intern / Extern:</label>
-  <div class="radio-group">
-    <input type="radio" name="status" required> Intern
-    <input type="radio" name="status" required> Extern
-  </div>
+<label>Intern / Extern:</label>
 
-  <label>Preferred Organization:
+<div class="radio-group">
+  <label class="radio-option">
+    <input type="radio" name="status">
+    Intern
+  </label>
+
+  <label class="radio-option">
+    <input type="radio" name="status">
+    Extern
+  </label>
+</div>
+
+ <label>Preferred Organization:
     <select required onblur="checkEmpty(this)">
       <option value="">Select a club</option>
       <option>Exposure</option>
