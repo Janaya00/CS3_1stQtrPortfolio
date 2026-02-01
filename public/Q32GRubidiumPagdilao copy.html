@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+<meta name="author" content="Janaya Pagdilao">
+<title>Club Application Form!</title>
+
+
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: rgb(196, 128, 142);  
+    background: #f2f6ff;
+    padding: 20px;
+    background-image: url("https://i.pinimg.com/originals/39/12/ad/3912ade472c79ff580f08aee1f299578.gif");
+    background-size: cover;     
+    background-repeat: no-repeat; 
+    background-position: center;  
+  }
+
+  h1 {
+    color: rgb(216, 135, 152); 
+    text-align: center;
+    margin-bottom: -10px;
+  }
+
+   h2 {
+    margin-top: -10px;
+    color: rgb(216, 135, 152); 
+    text-align: center;
+  }
+
+  legend{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 1.2em; 
+    color: rgb(216, 135, 152); 
+  }
+
+  form {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(213, 54, 123, 0.25);
+  }
+
+  fieldset {
+    margin-bottom: 30px;
+    border: 2px dashed rgb(255, 201, 212);
+    border-radius: 5px;
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600; 
+    font-size: 1rem; 
+    color: rgb(217, 140, 161);  
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+
+  input:focus, select:focus, textarea:focus {
+    border: 2px solid #ff659d;
+    box-shadow:0 4px 10px rgba(120,80,80,0.25);
+    outline: none;
+    background-color: #eef3ff;
+  }
+
+
+  .error {
+    border: 2px solid red;
+    background-color: #ffe5e5;
+  }
+
+
+  .valid {
+    border: 2px solid green;
+  }
+
+.radio-group {
+  margin-top: 8px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+ input[type="submit"], input[type="reset"] {
+  width: 48%;
+  margin-top: 15px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border: none; 
+  border-radius: 8px; 
+  background: linear-gradient(135deg, #ffe7f1, #d99db5); 
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #ffc1da, #ff4a8a);
+}
+
+  input[type="radio"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<h1>Club Application Form</h1>
+<h2>Please fill out the form below to apply for a club membership.</h2>
+
+<form onsubmit="return validateSubmission();" onreset="return validateReset();">
+
+<fieldset>
+  <legend>Student Information</legend>
+
+  <label>Student ID:
+    <input type="number" required onblur="checkEmpty(this)">
+  </label>
+
+  <label>Full Name:
+    <input type="text" required onblur="checkEmpty(this)">
+  </label>
+
+  <label>Birth Date:
+    <input type="date" required onblur="checkEmpty(this)">
+  </label>
+
+  <label>Email Address:
+    <input type="email" required onblur="checkEmpty(this)">
+  </label>
+</fieldset>
+
+<fieldset>
+  <legend>Club Membership Information</legend>
+
+  <label>Grade Level:
+    <select required onblur="checkEmpty(this)">
+      <option value="">Select your grade level</option>
+      <option>Grade 7</option>
+      <option>Grade 8</option>
+      <option>Grade 9</option>
+      <option>Grade 10</option>
+      <option>Grade 11</option>
+      <option>Grade 12</option>
+    </select>
+  </label>
+
+<label>Intern / Extern:</label>
+
+<div class="radio-group">
+  <label class="radio-option">
+    <input type="radio" name="status">
+    Intern
+  </label>
+
+  <label class="radio-option">
+    <input type="radio" name="status">
+    Extern
+  </label>
+</div>
+
+ <label>Preferred Organization:
+    <select required onblur="checkEmpty(this)">
+      <option value="">Select a club</option>
+      <option>Exposure</option>
+      <option>Labuyo</option>
+      <option>Kislap</option>
+      <option>Karyo</option>
+      <option>Aksis</option>
+      <option>Pallastro</option>
+    </select>
+  </label>
+
+  <label>Why do you want to join?
+    <textarea rows="4" required onblur="checkEmpty(this)"></textarea>
+  </label>
+
+  <input type="submit" value="Submit">
+  <input type="reset" value="Reset">
+    <button type="button" onclick="goToView()">View Signups</button>
+</fieldset>
+
+</form>
+
+<script>
+  function validateSubmission() {
+    return confirm("Are you sure you want to submit your application?");
+  }
+
+  function validateReset() {
+    return confirm("Are you sure you want to reset the form?");
+  }
+
+  function checkEmpty(field) {
+    if (field.value.trim() === "") {
+      field.classList.add("error");
+      field.classList.remove("valid");
+    } else {
+      field.classList.remove("error");
+      field.classList.add("valid");
+    }
+  }
+</script>
+
+</body>
+</html>
