@@ -16,8 +16,8 @@
     background: #f2f6ff;
     padding: 20px;
     background-image: url("https://i.pinimg.com/originals/39/12/ad/3912ade472c79ff580f08aee1f299578.gif");
-    background-size: cover;     
-    background-repeat: no-repeat; 
+    background-size: cover;   
+    background-repeat: no-repeat;  
     background-position: center;  
   }
 
@@ -129,108 +129,108 @@ input[type="submit"]:hover, input[type="reset"]:hover {
   width: auto;
   margin-right: 8px;
 }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Show List of Students Who Signed-Up</h1>
+        <p class="author">by Janaya Pagdilao</p>
+        
+        <a href="Q32GRubidiumPagdilao.html" class="back-link">Back to Signup</a>
+        
+        <div class="filter-section">
+            <label for="clubSelect">Select Your Club:</label>
+            <select id="clubSelect" onchange="filterSignups()">
+                <option value="">-- select an option --</option>
+            </select>
+        </div>
+        
+        <div class="total-count" id="totalCount">Total Signup: 0</div>
+        
+        <div id="tableContainer"></div>
+    </div>
+    <script>
+    function loadSignups() {
+      const data = JSON.parse(localStorage.getItem("signUps"));
 
+      const output = document.getElementById("output");
+      const total = document.getElementById("total");
 
-</style>
+      if (!data || data.length === 0) {
+        output.innerHTML = "<p>No sign-ups stored.</p>";
+        total.innerText = "";
+        return;
+      }
+
+      const filter = document.getElementById("filter").value;
+      const filtered = filter === "ALL"
+        ? data
+        : data.filter(s => s.club === filter);
+
+      if (filtered.length === 0) {
+        output.innerHTML = "<p>No sign-ups for this club.</p>";
+        total.innerText = "Total Sign-ups: 0";
+        return;
+      }
+
+      let html = `
+        <table>
+          <tr>
+            <th>Student ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Mobile No.</th>
+            <th>Grade</th>
+            <th>Club</th>
+            <th>Status</th>
+          </tr>
+      `;
+
+      filtered.forEach(s => {
+        html += `
+          <tr>
+            <td>${s.student_id}</td>
+            <td>${s.full_name}</td>
+            <td>${s.email}</td>
+            <td>${s.mobile}</td>
+            <td>${s.grade_level}</td>
+            <td>${s.club}</td>
+            <td>${s.status}</td>
+          </tr>
+        `;
+      });
+
+      html += "</table>";
+
+      output.innerHTML = html;
+      total.innerText = "Total Sign-ups: " + filtered.length;
+    }
+
+    window.onload = loadSignups;
+  </script>
 </head>
 
 <body>
 
-<h1>Club Application Form</h1>
-<h2>Please fill out the form below to apply for a club membership.</h2>
+<h2>Club Sign-ups</h2>
 
-<form onsubmit="return validateSubmission();" onreset="return validateReset();">
+<label>
+  Filter by Club:
+  <select id="filter" onchange="loadSignups()">
+    <option value="ALL">ALL</option>
+    <option value="Karyo">Karyo</option>
+    <option value="Exposure">Exposure</option>
+    <option value="Labuyo">Labuyo</option>
+    <option value="Kislap">Kislap</option>
+    <option value="Pallastro">Pallastro</option>
+  </select>
+</label>
 
-<fieldset>
-  <legend>Student Information</legend>
+<div id="output"></div>
+<p id="total"></p>
 
-  <label>Student ID:
-    <input type="number" required onblur="checkEmpty(this)">
-  </label>
-
-  <label>Full Name:
-    <input type="text" required onblur="checkEmpty(this)">
-  </label>
-
-  <label>Birth Date:
-    <input type="date" required onblur="checkEmpty(this)">
-  </label>
-
-  <label>Email Address:
-    <input type="email" required onblur="checkEmpty(this)">
-  </label>
-</fieldset>
-
-<fieldset>
-  <legend>Club Membership Information</legend>
-
-  <label>Grade Level:
-    <select required onblur="checkEmpty(this)">
-      <option value="">Select your grade level</option>
-      <option>Grade 7</option>
-      <option>Grade 8</option>
-      <option>Grade 9</option>
-      <option>Grade 10</option>
-      <option>Grade 11</option>
-      <option>Grade 12</option>
-    </select>
-  </label>
-
-<label>Intern / Extern:</label>
-
-<div class="radio-group">
-  <label class="radio-option">
-    <input type="radio" name="status">
-    Intern
-  </label>
-
-  <label class="radio-option">
-    <input type="radio" name="status">
-    Extern
-  </label>
-</div>
-
- <label>Preferred Organization:
-    <select required onblur="checkEmpty(this)">
-      <option value="">Select a club</option>
-      <option>Exposure</option>
-      <option>Labuyo</option>
-      <option>Kislap</option>
-      <option>Karyo</option>
-      <option>Aksis</option>
-      <option>Pallastro</option>
-    </select>
-  </label>
-
-  <label>Why do you want to join?
-    <textarea rows="4" required onblur="checkEmpty(this)"></textarea>
-  </label>
-
-  <input type="submit" value="Submit">
-  <input type="reset" value="Reset">
-</fieldset>
-
-</form>
-
-<script>
-  function validateSubmission() {
-    return confirm("Are you sure you want to submit your application?");
-  }
-
-  function validateReset() {
-    return confirm("Are you sure you want to reset the form?");
-  }
-
-  function checkEmpty(field) {
-    if (field.value.trim() === "") {
-      field.classList.add("error");
-      field.classList.remove("valid");
-    } else {
-      field.classList.remove("error");
-      field.classList.add("valid");
-    }
-  }
-</script>
+<a href="Q32GRubidiumPagdilao.html">← Back to Sign-Up Page</a>
 
 </body>
 </html>
+</script>
