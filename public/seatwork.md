@@ -77,6 +77,7 @@ It could be that these elements follow a layering system, and it is indicated by
     The element with this positioning looks for the nearest ancestor that is not "static-positioned" and makes itself relative to that, otherwise, it makes itself relative to the viewport. 
 
     c. How do you differentiate sticky from fixed (you can research on sticky)?
-    
+    A sticky positioned element becomes fixed when you scroll past a certain point, while a fixed element does not move at all.
 
     d. If you were designing a webpage for a school event, how might you use positioning to highlight important information? Please give concrete examples.
+    If I were to make a school event webpage, I would start by making a navigation bar as a top menu *which has home, schedule, registration, etc.* using a fixed positioning, which can allow them to navigate without having to scroll all the way back up. After this, I would use the sticky positioning to titles regarding information about the event, examples being the guest speaker or the event schedule names, so that they can be easy to follow and stay visible while scrolling. After that, I would make an absolute "registration deadline" button, and a fixed "register now" button, so users can quickly sign up. Lastly, I would use relative for any other element to layout it properly, making sure that the important information is distinguishable and highlighted.
