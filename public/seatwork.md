@@ -16,41 +16,7 @@
     **- This seatwork is worth 20pts and should be submitted by the end of the period** The link to [KHub submission bin](https://khub.mc.pshs.edu.ph/mod/assign/view.php?id=15481).
       - Submit the links to your .md file and .html file.
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="author" content="<your names>" />
-  <meta name="revised" content="<date today>" />
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .header, .footer {
-      background: lightblue;
-      padding: 10px;
-    }
-    .footer {
-       opacity: 0.5;
-    }
-    .sidebar {
-      background: lightgreen;
-      width: 150px;
-      height: 200px;
-    }
-    .content {
-      background: lightyellow;
-      width: 300px;
-      height: 200px;
-    }    
-  </style>
-</head>
-<body>
-  <div class="header">Header</div>
-  <div class="sidebar">Sidebar</div>
-  <div class="content">Main Content</div>
-  <div class="footer">Footer</div>
-</body>
-</html>
-```
+
 ### Step 1 (Static vs Relative):
 
 - Add in css ```position: relative; top: 20px; left: 20px;``` to .sidebar.
@@ -75,7 +41,8 @@ with the page, it stays in place.
 - Add in css ```position: absolute; top: 66px; left: 200px;``` to .content.
 
 - Guided Question: What is the effect of position: absolute on an element? How is it different from fixed?
-
+<br><br>
+Position absolute moves relative to a parent element, while position fixed stays locked to the viewport.
 ### Step 4 : (Absolute)
 
 - Add in html ```<div class="notice">Notice!</div>``` and include the css below:
@@ -94,6 +61,7 @@ with the page, it stays in place.
 - Give .content a z-index: 1.
 
 - Guided Question: Why does the notice appear on top of the content? What happens if you swap the z‑index values?
+It could be that these elements follow a layering system, and it is indicated by the z-index which element goes on which layer. When the z-index is a bigger value, the element is placed on top of elements with lower z-index values.
 
 - Challenge: 
     * What changes that you have to do on the code that will position .notice box on the top right corner of the .content box? Please write the code on paper as well (both html and css on the part of .notice and .content).
@@ -103,9 +71,12 @@ with the page, it stays in place.
 3. Please answer the following reflection questions (15 minutes)
 
     a. Could you summarize the differences between the CSS position values (static, relative, absolute, fixed)? 
+    Static follows the normal flow of the page, so using "top, left, bottom, right" does not work on it. Relative, despite following the normal flow, is affected by "top, left, bottom, right", so it changes accordingly. Absolute is positioned relative to the nearest parent element, while fixed makes itself relative to the viewport, so it stays in place even when scrolling. 
 
     b. How does absolute positioning depend on its parent element?
+    The element with this positioning looks for the nearest ancestor that is not "static-positioned" and makes itself relative to that, otherwise, it makes itself relative to the viewport. 
 
     c. How do you differentiate sticky from fixed (you can research on sticky)?
+    
 
     d. If you were designing a webpage for a school event, how might you use positioning to highlight important information? Please give concrete examples.
