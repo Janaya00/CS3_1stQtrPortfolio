@@ -128,7 +128,6 @@ function addMovie() {
 }
 
 
-
 function displayMovies() {
 
   let movieList = document.getElementById("movieList");
@@ -146,11 +145,10 @@ function displayMovies() {
 
     let stars = "★".repeat(movies[i].rating);
 
-    movieList.innerHTML += "<div>" 
-      + movies[i].title + " (" + movies[i].year + ") - " 
-      + movies[i].genre + ", Rating: <span style='color: gold'>" 
-      + stars + "</span> "
-      + "<button onclick='deleteMovie(" + i + ")'>Delete</button>"
+    movieList.innerHTML += "<div>"
+      + movies[i].title + " (" + movies[i].year + ") - "
+      + movies[i].genre + ", Rating: <span style='color: gold'>"
+      + stars + "</span>"
       + "</div>";
   }
 }
