@@ -143,8 +143,10 @@ function displayMovies() {
   for (let i = 0; i < movies.length; i++) {
 
     let stars = "★".repeat(movies[i].rating);
-    movieList.innerHTML += "<div>" + movies[i].title + " (" + movies[i].year + ") - <span style='color: gold'>" + stars + "</span></div>";
+    movieList.innerHTML += "<div>" + movies[i].title + " (" + movies[i].year + ") - " + movies[i].genre + ", Rating: " + stars + "</div>";
   }
+}
+</script>
 
 </body>
 </html>
