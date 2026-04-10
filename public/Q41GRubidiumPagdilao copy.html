@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
 <title>Add a Movie</title>
-
 
 <style>
   body {
@@ -11,23 +11,19 @@
 
   .container{
     width: 500px;
-    margin: 50px
-    padding: 100px;
+    margin: 50px;
+    padding: 50px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  flex-direction: column;
-  align-items: center;
-
   }
 
   input, select{
     width: 90%;
     padding: 10px;
-    margin: 10px 10px;
+    margin: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-     
   }
 
   button{
@@ -42,7 +38,6 @@
   }
 
   .stars span{
-    margin: 5px;
     font-size: 30px;
     color: gray;
     cursor: pointer;
@@ -51,60 +46,105 @@
   .active{
     color: gold;
   }
-
-  h2 {
-    color: #333;
-    text-align: center;
-  }
-
-  label {
-    color: #555;
-    font-weight: bold;
-    margin: 10px;
-  }
-
 </style>
 </head>
 
 <body>
 
-  <div class ="container">
+<div class="container">
 
-    <h2>Add a Movie</h2>
+  <h2>Add a Movie</h2>
 
-    <label>Title:</label>
-    <input type="text">
+  <label>Title:</label>
+  <input type="text" id="title">
 
-    <label>Year:</label>
-    <input type="number">
+  <label>Year:</label>
+  <input type="number" id="year">
 
-    <label>Genre:</label>
-    <select>
-      <option>Romance</option>
-      <option>Action</option>
-      <option>Sci-Fi</option>
-      <option>Comedy</option>
-      <option>Horror</option>
-    </select>
+  <label>Genre:</label>
+  <select id="genre">
+    <option>Romance</option>
+    <option>Action</option>
+    <option>Sci-Fi</option>
+    <option>Comedy</option>
+    <option>Horror</option>
+  </select>
 
-    <label>Rating:</label>
-    <div class="stars"> 
-    <span onclick="rate(1)">&#9733;</span>
-    <span onclick="rate(2)">&#9733;</span>
-    <span onclick="rate(3)">&#9733;</span>
-    <span onclick="rate(4)">&#9733;</span>
-    <span onclick="rate(5)">&#9733;</span>
+  <label>Rating:</label>
+  <div class="stars"> 
+    <span onclick="rate(1)">★</span>
+    <span onclick="rate(2)">★</span>
+    <span onclick="rate(3)">★</span>
+    <span onclick="rate(4)">★</span>
+    <span onclick="rate(5)">★</span>
   </div>
 
-  <br>
-  
-  <button> Add Movie </button>
+  <button onclick="addMovie()">Add Movie</button>
 
   <h2>Movie List</h2>
+  <div id="movieList"></div>
 
+</div>
 
-<script></script>
+<script>
+let rating = 0;
 
+function rate(stars) {
+  rating = stars;
+
+  let starElements = document.querySelectorAll(".stars span");
+
+  for (let i = 0; i < starElements.length; i++) {
+    if (i < stars) {
+      starElements[i].classList.add("active");
+    } else {
+      starElements[i].classList.remove("active");
+    }
+  }
+}
+
+function addMovie() {
+
+  let movie = {
+    title: document.getElementById("title").value,
+    year: document.getElementById("year").value,
+    genre: document.getElementById("genre").value,
+    rating: rating
+  };
+
+  let movies;
+
+  if (localStorage.getItem("movies")) {
+    movies = JSON.parse(localStorage.getItem("movies"));
+  } else {
+    movies = [];
+  }
+
+  movies.push(movie);
+
+  localStorage.setItem("movies", JSON.stringify(movies));
+
+  displayMovies();
+}
+
+function displayMovies() {
+
+  let movieList = document.getElementById("movieList");
+  movieList.innerHTML = "";
+
+  let movies;
+
+  if (localStorage.getItem("movies")) {
+    movies = JSON.parse(localStorage.getItem("movies"));
+  } else {
+    movies = [];
+  }
+
+  for (let i = 0; i < movies.length; i++) {
+
+    let stars = "★".repeat(movies[i].rating);
+    movieList.innerHTML += "<div>" + movies[i].title + " (" + movies[i].year + ") - <span style='color: gold'>" + stars + "</span></div>";
+  }
 
 </body>
 </html>
