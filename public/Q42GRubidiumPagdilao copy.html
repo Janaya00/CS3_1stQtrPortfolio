@@ -11,7 +11,7 @@
 
   .container{
     width: 500px;
-    margin: 50px;
+    margin: 50px auto;
     padding: 50px;
     background: white;
     border-radius: 10px;
@@ -127,6 +127,22 @@ function addMovie() {
   displayMovies();
 }
 
+function deleteMovie(index){
+
+  let confirmDelete = confirm("Are you sure you want to delete this movie?");
+
+  if(confirmDelete){
+
+    let movies = JSON.parse(localStorage.getItem("movies")) || [];
+
+    movies.splice(index, 1);
+
+    localStorage.setItem("movies", JSON.stringify(movies));
+
+    displayMovies();
+  }
+}
+
 function displayMovies() {
 
   let movieList = document.getElementById("movieList");
@@ -143,9 +159,18 @@ function displayMovies() {
   for (let i = 0; i < movies.length; i++) {
 
     let stars = "★".repeat(movies[i].rating);
-    movieList.innerHTML += "<div>" + movies[i].title + " (" + movies[i].year + ") - " + movies[i].genre + ", Rating: " + stars + "</div>";
+
+    movieList.innerHTML += "<div>" 
+      + movies[i].title + " (" + movies[i].year + ") - " 
+      + movies[i].genre + ", Rating: <span style='color: gold'>" 
+      + stars + "</span> "
+      + "<button onclick='deleteMovie(" + i + ")'>Delete</button>"
+      + "</div>";
   }
 }
+
+
+displayMovies();
 </script>
 
 </body>
